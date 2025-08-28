@@ -1,0 +1,16 @@
+# config.yaml
+paths:
+  trimmomatic: /home/rodrigo/miniconda3/envs/kneaddata/share/trimmomatic-0.39-2/
+  kneaddata_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Kneaddata/hg37
+  metaphlan_db: /media/rodrigo/Data1/TESIS/MP_dbs/metaphlan_databases_vJun23
+  nucleotide_db: /media/rodrigo/Data1/TESIS/MP_dbs/chocophlan
+  protein_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/uniref
+  kraken2_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/kraken2/k2_pluspfp_16gb_20230314
+
+tools:
+  threads: 8
+  kneaddata_env: microbiome-pipeline
+  metaphlan_env: microbiome-pipeline
+  humann3_env: microbiome-pipeline
+
+samples_dir: /home/rodrigo/Desktop/sample_test
