@@ -6,6 +6,11 @@ paths:
   nucleotide_db: /media/rodrigo/Data1/TESIS/MP_dbs/chocophlan
   protein_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/uniref
   kraken2_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/kraken2/k2_pluspfp_16gb_20230314
+  humann_go_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_go_uniref90.txt.gz
+  humann_ko_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_ko_uniref90.txt.gz
+  humann_ec_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_level4ec_uniref90.txt.gz
+  humann_pfam_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_pfam_uniref90.txt.gz
+  humann_eggnog_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_eggnog_uniref90.txt.gz
 
 tools:
   threads: 8

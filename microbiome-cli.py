@@ -52,7 +52,6 @@ def run_qc(sample_dir, config):
         f"-db {config['paths']['kneaddata_db']} "
         f"-t {config['tools']['threads']} "
         f"-o {output_dir} "
-        #f"--trimmomatic {config['paths']['trimmomatic']} "
         f"--run-fastqc-start --run-fastqc-end"
     )
     run_cmd(cmd)
@@ -118,6 +117,57 @@ def run_taxonomy(sample_dir, config):
     run_cmd(f"rm {temp_bz2}")
     print(f"✅ Taxonomía completada: {output_file}")
 
+    # --- Separar perfiles por nivel taxonómico ---
+    print("🧩 Separando perfiles por niveles taxonómicos...")
+
+    if not os.path.exists(output_file):
+        raise FileNotFoundError(f"No se generó el perfil taxonómico: {output_file}")
+
+    base_dir = sample_dir
+
+    try:
+        # Phylum
+        run_cmd(
+            f"grep -E 'p__|clade' {output_file} | egrep -v 'c__|o__|f__|g__|s__' | "
+            f"sed 's/^.*p__//g' | cut -f1,2-5000 > {os.path.join(base_dir, 'profile_phylum.txt')}"
+        )
+
+        # Class
+        run_cmd(
+            f"grep -E 'c__|clade' {output_file} | egrep -v 'o__|f__|g__|s__' | "
+            f"sed 's/^.*c__//g' | cut -f1,2-5000 > {os.path.join(base_dir, 'profile_class.txt')}"
+        )
+
+        # Order
+        run_cmd(
+            f"grep -E 'o__|clade' {output_file} | egrep -v 'f__|g__|s__' | "
+            f"sed 's/^.*o__//g' | cut -f1,2-5000 > {os.path.join(base_dir, 'profile_order.txt')}"
+        )
+
+        # Family
+        run_cmd(
+            f"grep -E 'f__|clade' {output_file} | egrep -v 'g__|s__' | "
+            f"sed 's/^.*f__//g' | cut -f1,2-5000 > {os.path.join(base_dir, 'profile_family.txt')}"
+        )
+
+        # Genus
+        run_cmd(
+            f"grep -E 'g__|clade' {output_file} | egrep -v 's__' | "
+            f"sed 's/^.*g__//g' | cut -f1,2-5000 > {os.path.join(base_dir, 'profile_genus.txt')}"
+        )
+
+        # Species
+        run_cmd(
+            f"grep -E 's__|clade' {output_file} | "
+            f"sed 's/^.*s__//g' | cut -f1,2-50000 > {os.path.join(base_dir, 'profile_species.txt')}"
+        )
+
+        print(f"✅ Perfiles taxonómicos separados guardados en {base_dir}")
+
+    except Exception as e:
+        print(f"❌ Error al procesar niveles taxonómicos: {e}")
+        raise
+
 
 # --- Módulo: Vías metabólicas con HUMAnN3 ---
 def run_pathways(sample_dir, config):
@@ -160,10 +210,29 @@ def run_pathways(sample_dir, config):
     merged = os.path.join(sample_dir, "merged.fastq")
     humann_out = os.path.join(sample_dir, "humann3_results")
 
+    # --- Configurar las bases de datos de HUMAnN3 usando humann_config ---
+    print("🔧 Configurando rutas de bases de datos para HUMAnN3...")
+
+    nucleotide_db = config['paths']['nucleotide_db']
+    protein_db = config['paths']['protein_db']
+    humann_env = config['tools']['humann3_env']
+
+    run_cmd(
+        f"conda run -n {humann_env} humann_config --update database_folders nucleotide {nucleotide_db}"
+    )
+    run_cmd(
+        f"conda run -n {humann_env} humann_config --update database_folders protein {protein_db}"
+    )
+
+    print(f"✅ Bases de datos configuradas:")
+    print(f"   Nucleotide: {nucleotide_db}")
+    print(f"   Protein: {protein_db}")
+
+    # --- Ejecutar HUMAnN3 ---
     run_cmd(f"cat {r1} {r2} > {merged}")
 
     cmd = (
-        f"conda run -n {config['tools']['humann3_env']} humann "
+        f"conda run -n {humann_env} humann "
         f"--input {merged} "
         f"--output {humann_out} "
         f"--threads {config['tools']['threads']} "
@@ -173,6 +242,93 @@ def run_pathways(sample_dir, config):
     run_cmd(cmd)
     print(f"✅ Vías metabólicas completadas: {humann_out}")
 
+    # --- POST-PROCESAMIENTO HUMAnN3 ---
+    print("🧩 Post-procesando resultados de HUMAnN3...")
+
+    results_dir = os.path.join(sample_dir, "humann3_results")
+    if not os.path.exists(results_dir):
+        raise FileNotFoundError(f"Directorio humann3_results no encontrado: {results_dir}")
+
+    os.chdir(results_dir)
+    print(f"📁 Trabajando en: {results_dir}")
+
+    genefam_tsv = "merged_genefamilies.tsv"
+    genefam_path = os.path.join(results_dir, genefam_tsv)
+    if not os.path.exists(genefam_path):
+        raise FileNotFoundError(f"No se encontró el archivo de genefamilias: {genefam_path}")
+
+    # Renormalizar a abundancia relativa
+    print("🔁 Renormalizando a abundancia relativa...")
+    run_cmd(
+        f"conda run -n {humann_env} humann_renorm_table "
+        f"--input {genefam_tsv} --units relab --output merged_genefamilies_relab.tsv"
+    )
+    run_cmd(
+        f"conda run -n {humann_env} humann_renorm_table "
+        f"--input merged_pathabundance.tsv --units relab --output merged_pathabundance_relab.tsv"
+    )
+
+    # Extraer no estratificado de genefamilias
+    print("✂️ Extrayendo genefamilias no estratificadas...")
+    run_cmd(
+        f"conda run -n {humann_env} humann_split_stratified_table "
+        f"--input merged_genefamilies_relab.tsv --output stra_tmp"
+    )
+    run_cmd("mv stra_tmp/merged_genefamilies_relab_unstratified.tsv .")
+    run_cmd("rm -r stra_tmp")
+
+    # Función auxiliar para procesar cada base de datos
+    def process_regroup(input_tsv, db_path, output_suffix):
+        out_tsv = f"merged_genefamilies_relab_{output_suffix}.tsv"
+        stra_dir = f"stra_{output_suffix}"
+        unstrat_file = f"merged_genefamilies_relab_{output_suffix}_unstratified.tsv"
+        src = f"{stra_dir}/{out_tsv.replace('.tsv', '_unstratified.tsv')}"
+
+        # Regroup
+        run_cmd(
+            f"conda run -n {humann_env} humann_regroup_table "
+            f"-i {input_tsv} -c {db_path} -o {out_tsv}"
+        )
+
+        # Split stratified
+        run_cmd(
+            f"conda run -n {humann_env} humann_split_stratified_table "
+            f"--input {out_tsv} --output {stra_dir}"
+        )
+
+        # Mover archivo unstratified con nombre final (una sola vez)
+        if not os.path.exists(src):
+            raise FileNotFoundError(f"No se generó el archivo unstratified: {src}")
+        run_cmd(f"mv {src} {unstrat_file}")
+
+        # Limpiar
+        run_cmd(f"rm -r {stra_dir}")
+
+    # Procesar cada base de datos
+    try:
+        print("🔄 Procesando GO...")
+        process_regroup("merged_genefamilies_relab.tsv", config['paths']['humann_go_db'], "go")
+
+        print("🔄 Procesando KO...")
+        process_regroup("merged_genefamilies_relab.tsv", config['paths']['humann_ko_db'], "ko")
+
+        print("🔄 Procesando EC...")
+        process_regroup("merged_genefamilies_relab.tsv", config['paths']['humann_ec_db'], "ec")
+
+        print("🔄 Procesando PFAM...")
+        process_regroup("merged_genefamilies_relab.tsv", config['paths']['humann_pfam_db'], "pfam")
+
+        print("🔄 Procesando EGGNOG...")
+        process_regroup("merged_genefamilies_relab.tsv", config['paths']['humann_eggnog_db'], "eggnog")
+
+        print(f"✅ Post-procesamiento HUMAnN3 completado en: {results_dir}")
+
+    except Exception as e:
+        print(f"❌ Error en post-procesamiento HUMAnN3: {e}")
+        raise
+
+    # Volver al directorio original
+    os.chdir(sample_dir)
 
 # --- Pipeline completo ---
 def run_all(samples_dir, config):
