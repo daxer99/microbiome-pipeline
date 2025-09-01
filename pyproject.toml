@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools >= 77.0.3", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "microbiome-pipeline"
+version = "0.1.0"
+description = "CLI modular para análisis de microbioma: QC, taxonomía y vías metabólicas"
+readme = "README.md"
+license = "MIT"  # ✅ Formato SPDX (PEP 639), reemplaza el antiguo {text = "..."}
+authors = [
+    {name = "Rodrigo Peralta", email = "rodrigo.peralta@uner.edu.ar"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Development Status :: 4 - Beta",
+]
+requires-python = ">=3.8"
+keywords = ["microbiome", "metagenomics", "pipeline", "cli"]
+
+[project.scripts]
+microbiome-cli = "microbiome_cli.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/daxer99/microbiome-pipeline"
+Repository = "https://github.com/daxer99/microbiome-pipeline"
+Issues = "https://github.com/daxer99/microbiome-pipeline/issues"
+
+# ✅ Evita el error de "Multiple top-level packages"
+[tool.setuptools.packages.find]
+include = ["microbiome_cli*"]

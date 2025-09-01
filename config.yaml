@@ -3,8 +3,8 @@ paths:
   trimmomatic: /home/rodrigo/miniconda3/envs/kneaddata/share/trimmomatic-0.39-2/
   kneaddata_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Kneaddata/hg37
   metaphlan_db: /media/rodrigo/Data1/TESIS/MP_dbs/metaphlan_databases_vJun23
-  nucleotide_db: /media/rodrigo/Data1/TESIS/MP_dbs/chocophlan
-  protein_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/uniref
+  humann_nucleotide_db: /media/rodrigo/Data1/TESIS/MP_dbs/chocophlan
+  humann_protein_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/uniref
   kraken2_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/kraken2/k2_pluspfp_16gb_20230314
   humann_go_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_go_uniref90.txt.gz
   humann_ko_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_ko_uniref90.txt.gz

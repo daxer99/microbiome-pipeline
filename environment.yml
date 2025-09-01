@@ -1,0 +1,15 @@
+name: microbiome-pipeline
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - biobakery
+dependencies:
+  - python=3.10
+  - pip
+  - kneaddata=0.12.3
+  - metaphlan=4.2.2
+  - yaml
+  - pip:
+    - pyyaml
+    - humann==3.9
