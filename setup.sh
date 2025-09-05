@@ -4,7 +4,7 @@
 
 set -e
 
-echo "🚀 Iniciando instalación del pipeline de microbioma"
+echo "🚀 Iniciando instalación del entorno microbiome-pipeline"
 
 ENV_NAME="microbiome-pipeline"
 

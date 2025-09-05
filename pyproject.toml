@@ -28,6 +28,6 @@ Homepage = "https://github.com/daxer99/microbiome-pipeline"
 Repository = "https://github.com/daxer99/microbiome-pipeline"
 Issues = "https://github.com/daxer99/microbiome-pipeline/issues"
 
-# ✅ Evita el error de "Multiple top-level packages"
+# ✅ Soluciona el error de "Multiple top-level packages discovered"
 [tool.setuptools.packages.find]
 include = ["microbiome_cli*"]
