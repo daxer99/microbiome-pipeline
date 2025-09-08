@@ -13,3 +13,4 @@ dependencies:
   - pip:
     - pyyaml
     - humann==3.9
+    - streamlit
