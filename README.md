@@ -81,7 +81,6 @@ streamlit run app.py
 ![Logo](https://i.ibb.co/s9nxJ0jr/screencapture-localhost-8501-2025-09-08-12-26-29-1.png)
 ## Licencia
 
-[MIT](https://choosealicense.com/licenses/mit/)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 
