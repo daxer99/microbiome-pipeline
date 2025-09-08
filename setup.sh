@@ -23,6 +23,8 @@ conda install -c conda-forge -c bioconda -y \
     samtools \
     pigz
 
-# 3. Instalar HUMAnN (si es necesario)
+# 3. Instalar HUMAnN y demas requerimientos
 echo "🔹 Instalando HUMAnN..."
 pip install humann
+pip install streamlit
+pip install pyyaml

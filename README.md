@@ -20,27 +20,27 @@ Incluye una interfaz gráfica (GUI).
 
 ## Instalacion
 
-1. Clonar el repositorio
+1. Clonar el repositorio.
 ```bash
 git clone https://github.com/daxer99/microbiome-pipeline.git
 cd microbiome-pipeline
 ```
-2. Crear el entorno virtual
+2. Crear el entorno virtual, instalando dependencias y requerimientos.
 ```bash
 ./setup.sh
 ```
-3. Instalar el paquete en modo desarrollo
+3. Instalar el paquete en modo desarrollo.
 ```bash
 pip install -e .
 ```
 ## Descarga de bases de datos
-- Opcion 1: mediante GUI 
+- Opcion 1: mediante GUI. 
 ```bash
-python dir_downloader_config.py
+streamlit run app.py
 ```
-![Logo](https://i.ibb.co/LdmN9rvZ/Screenshot-2025-09-04-21-31-44.png)
+![Logo](https://i.ibb.co/gZb6cdb1/screencapture-localhost-8501-2025-09-08-12-24-51-1.png)
 
-- Opcion 2: mediante terminal dentro del entorno microbiome-pipeline
+- Opcion 2: mediante terminal dentro del entorno microbiome-pipeline.
 ```bash
 # KneadData (genoma humano hg37)
 kneaddata_database --download human_genome bowtie2 $DIR
@@ -76,12 +76,13 @@ microbiome-cli run-all /ruta/a/muestras/
 
 - GUI (Interfaz grafica)
 ```bash
-python -m microbiome_gui.gui_launcher
+streamlit run app.py
 ```
-![Logo](https://i.ibb.co/gMChy8rt/Screenshot-2025-09-04-21-30-55.png)
+![Logo](https://i.ibb.co/s9nxJ0jr/screencapture-localhost-8501-2025-09-08-12-26-29-1.png)
 ## Licencia
 
 [MIT](https://choosealicense.com/licenses/mit/)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 
 ## Autor

@@ -1,16 +1,14 @@
 # config.yaml
 paths:
-  trimmomatic: /home/rodrigo/miniconda3/envs/kneaddata/share/trimmomatic-0.39-2/
-  kneaddata_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Kneaddata/hg37
-  metaphlan_db: /media/rodrigo/Data1/TESIS/MP_dbs/metaphlan_databases_vJun23
-  humann_nucleotide_db: /media/rodrigo/Data1/TESIS/MP_dbs/chocophlan
-  humann_protein_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/uniref
-  kraken2_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/kraken2/k2_pluspfp_16gb_20230314
-  humann_go_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_go_uniref90.txt.gz
-  humann_ko_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_ko_uniref90.txt.gz
-  humann_ec_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_level4ec_uniref90.txt.gz
-  humann_pfam_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_pfam_uniref90.txt.gz
-  humann_eggnog_db: /media/rodrigo/Data1/Microbiome/Recursos/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_eggnog_uniref90.txt.gz
+  kneaddata_db: /home/User/DB/metagenomic/Kneaddata/hg37
+  metaphlan_db: /home/User/DB/metagenomic/metaphlan_databases_vJun23
+  humann_nucleotide_db: /home/User/DB/metagenomic/Humann_databases/chocophlan
+  humann_protein_db: /home/User/DB/metagenomic/Humann_databases/uniref
+  humann_go_db: /home/User/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_go_uniref90.txt.gz
+  humann_ko_db: /home/User/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_ko_uniref90.txt.gz
+  humann_ec_db: /home/User/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_level4ec_uniref90.txt.gz
+  humann_pfam_db: /home/User/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_pfam_uniref90.txt.gz
+  humann_eggnog_db: /home/User/DB/metagenomic/Humann_databases/utility_mapping/utility_mapping/map_eggnog_uniref90.txt.gz
 
 tools:
   threads: 8
@@ -18,4 +16,4 @@ tools:
   metaphlan_env: microbiome-pipeline
   humann3_env: microbiome-pipeline
 
-samples_dir: /home/rodrigo/Desktop/sample_test
+samples_dir: /home/User/sample_test

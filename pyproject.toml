@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "microbiome-pipeline"
-version = "0.1.0"
-description = "CLI modular para análisis de microbioma: QC, taxonomía y vías metabólicas"
+version = "1.4.0"
+description = "CLI modular para análisis de microbioma: QC, taxonomía y rutas metabólicas"
 readme = "README.md"
 license = "MIT"  # ✅ Formato SPDX (PEP 639), reemplaza el antiguo {text = "..."}
 authors = [
