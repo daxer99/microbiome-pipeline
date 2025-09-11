@@ -38,7 +38,7 @@ pip install -e .
 ```bash
 streamlit run app.py
 ```
-![Logo](https://i.ibb.co/gZb6cdb1/screencapture-localhost-8501-2025-09-08-12-24-51-1.png)
+![Logo](https://i.ibb.co/6RMDq7nj/screencapture-localhost-8501-2025-09-08-12-24-51-1.png)
 
 - Opcion 2: mediante terminal dentro del entorno microbiome-pipeline.
 ```bash
